@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ciihuy QR and Bar Code Generator</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <script src="jquery.js"></script>
+        <script src="jsbarcode.js"></script>
+        <script src="qrcode.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+		<style>
+			@font-face{
+				font-family: 'Roboto';
+				src: url('Roboto-Regular.ttf');
+			}
+			html{
+				height: 100%;
+			}
+			body{
+				font-family: roboto;
+				user-select: none;
+				
+				background-image: url("bg.jpg");
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+				user-select: none;
+				overflow: auto;
+			}
+			#qrdata{
+				user-select: auto; 
+				box-sizing: border-box; 
+				width: 100%; 
+				margin-bottom: 10px; 
+				padding: 10px;
+				outline: none;
+				border: none;
+				border-radius: 20px;
+				padding: 25px;
+				
+				-webkit-box-shadow: 0px 0px 60px -25px rgba(0,0,0,.75);
+				-moz-box-shadow: 0px 0px 60px -25px rgba(0,0,0,.75);
+				box-shadow: 0px 0px 60px -25px rgba(0,0,0,.75);
+			}
+			button{
+				border: none;
+				font-weight: bold;
+				outline: none;
+				margin: 10px;
+				margin-bottom: 10px; 
+				color: white;
+				padding: 10px;
+				border-bottom: 2px solid white;
+				background-color: inherit;
+				
+			}
+			button:active{
+				color: gray;
+			}
+			#theholder{
+				padding: 20px; 
+				text-align: center; 
+				overflow: auto; 
+				display: none;
+				background-color: white;
+				border-radius: 20px;
+				
+				-webkit-box-shadow: 0px 0px 60px -25px rgba(0,0,0,.75);
+				-moz-box-shadow: 0px 0px 60px -25px rgba(0,0,0,.75);
+				box-shadow: 0px 0px 60px -25px rgba(0,0,0,.75);
+			}
+		</style>
+    </head>
+    <body>
+		<div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; padding: 20px; overflow: auto;">
+			<h1>Ciihuy QR and Bar Code Generator</h1>
+			<p>Type some short text or a url then click "Generate" to get a QR and Bar Code.</p>
+			<input id="qrdata" placeholder="Type something...">
+			<div style="text-align: center;">
+				<button onclick="gen()">GENERATE</button>
+			</div>
+			<div id="theholder">
+				<div>
+					<div style="display: inline-block;">
+						<div id="qrcode" style="width:100px; height:100px; margin-top:15px; width: 200px; height: 230px; margin: 0 auto;"></div>
+					</div>
+				</div>
+				<div>
+					<div style="display: inline-block;">
+						<svg id="barcode"></svg>
+					</div>
+				</div>
+			</div>
+			
+
+
+			<div style="text-align: center; margin: 20px; margin-bottom: 50px; color: white;">
+				<p style="font-size: 10px;"><img src="icon.png" width="64"><br>Developed by<br>CiihuyCom</p>
+			</div>
+		</div>
+		<script>
+			//Main QR
+			var qrcode = new QRCode(document.getElementById("qrcode"), {
+				width : 200,
+				height : 200
+			});
+
+			function gen() {	
+				setTimeout(function(){
+					var elText = document.getElementById("qrdata")				
+					if (!elText.value) {
+						elText.focus()
+						return;
+					}
+					
+					qrcode.makeCode(elText.value)
+					JsBarcode("#barcode", elText.value)
+					$("#theholder").slideDown()
+				},500)
+			}
+
+		</script>
+        <script>
+
+            function showqrdata(txt){
+                $("#qrdata").val(txt)
+				gen()
+            }
+
+        </script>
+
+    </body>
+</html>
